@@ -96,13 +96,11 @@ function GameController() {
         }
     }
 
-    return { switchTurn, getCurrentPlayer, checkWin, checkTie }
+    function restart() {
+        gameBoard.resetBoard();
+    }
+
+    return { switchTurn, getCurrentPlayer, checkWin, checkTie, restart }
 }
 
 const game = GameController();
-
-let win = game.checkWin(board);
-
-console.log(board);
-
-

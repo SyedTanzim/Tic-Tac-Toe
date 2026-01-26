@@ -21,15 +21,6 @@ const gameBoard = (function () {
         return board;
     }
 
-    function setMark(row, col, mark) {
-        if (board[row][col] === null) {
-            board[row][col] = mark;
-            return true;
-        }
-
-        return false;
-    }
-
     function resetBoard() {
         for (let i = 0; i < 3; i++) {
             board[i] = [];
@@ -37,6 +28,15 @@ const gameBoard = (function () {
                 board[i][j] = null;
             };
         };
+    }
+
+    function setMark(row, col, mark) {
+        if (board[row][col] === null) {
+            board[row][col] = mark;
+            return true;
+        }
+
+        return false;
     }
 
     return { getBoard, setMark, resetBoard }

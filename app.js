@@ -2,8 +2,8 @@ function Player(name, mark) {
     return { name, mark };
 }
 
-let player1 = Player('Tanzim', 'X');
-let player2 = Player('Bot', 'O');
+let player1 = Player('P1', 'X');
+let player2 = Player('P2', 'O');
 
 const gameBoard = (function () {
     let board = [];
@@ -111,13 +111,13 @@ const gameController = (function () {
         }
 
         if (gameController.checkWin(gameBoard.getBoard())) {
-            console.log(currentPlayer.name, ' won the game');
+            alert(`${currentPlayer.name} won the game`);
             isGameOver = true;
             return true;
         }
 
         if (gameController.checkTie(gameBoard.getBoard())) {
-            console.log('game is tied');
+            alert('game tied');
             isGameOver = true;
             return true;
         }
@@ -129,7 +129,10 @@ const gameController = (function () {
     }
 
     function restart() {
+        currentPlayer = player1;
+        isGameOver = false;
         gameBoard.resetBoard();
+        displayController.renderBoard(gameBoard.getBoard());
     }
 
     return { switchTurn, getCurrentPlayer, checkWin, checkTie, playTurn, restart }
@@ -163,6 +166,11 @@ const displayController = (function () {
                 container.appendChild(cell);
             }
         }
+
+        const restartBtn = document.querySelector('.restartBtn');
+        restartBtn.addEventListener('click', () => {
+            gameController.restart();
+        })
     }
 
     function handleClick(row, col) {

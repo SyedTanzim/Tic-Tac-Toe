@@ -113,13 +113,13 @@ const gameController = (function () {
         if (gameController.checkWin(gameBoard.getBoard())) {
             console.log(currentPlayer.name, ' won the game');
             isGameOver = true;
-            return;
+            return true;
         }
 
         if (gameController.checkTie(gameBoard.getBoard())) {
             console.log('game is tied');
             isGameOver = true;
-            return;
+            return true;
         }
         gameController.switchTurn();
 
@@ -159,7 +159,7 @@ const displayController = (function () {
                     displayController.handleClick(row, col);
                 });
 
-                cell.textContent = board[i][j] ?? '[ ]';
+                cell.textContent = board[i][j] ?? '';
                 container.appendChild(cell);
             }
         }

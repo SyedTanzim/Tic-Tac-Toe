@@ -97,6 +97,7 @@ const gameController = (function () {
     }
 
     function playTurn(row, col) {
+
         if (isGameOver === true) {
             return;
         }
@@ -104,6 +105,7 @@ const gameController = (function () {
         const currentPlayer = gameController.getCurrentPlayer();
 
         const success = gameBoard.setMark(row, col, currentPlayer.mark);
+
         if (success === false) {
             return;
         }
@@ -119,7 +121,6 @@ const gameController = (function () {
             isGameOver = true;
             return;
         }
-
         gameController.switchTurn();
     }
 
@@ -138,13 +139,34 @@ const displayController = (function () {
 
         for (let i = 0; i < board.length; i++) {
             for (let j = 0; j < board[i].length; j++) {
+
                 const cell = document.createElement('div');
                 cell.className = 'cell';
-                cell.textContent = board[i][j] ?? 'hi';
+                cell.dataset.row = i;
+                cell.dataset.col = j;
+
+                let row = Number(cell.dataset.row);
+                let col = Number(cell.dataset.col);
+
+                cell.addEventListener('click', () => {
+                    if (board[row][col] != null) {
+                        return;
+                    }
+                    displayController.handleClick(row, col);
+                    displayController.renderBoard(gameBoard.getBoard());
+                });
+
+                cell.textContent = board[i][j] ?? '[ ]';
                 container.appendChild(cell);
             }
         }
     }
 
-    return { renderBoard };
+    function handleClick(row, col) {
+        gameController.playTurn(row, col);
+    }
+
+    return { renderBoard, handleClick };
 })();
+
+displayController.renderBoard(gameBoard.getBoard());

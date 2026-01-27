@@ -122,6 +122,10 @@ const gameController = (function () {
             return;
         }
         gameController.switchTurn();
+
+        if (success === true) {
+            return true;
+        }
     }
 
     function restart() {
@@ -153,7 +157,6 @@ const displayController = (function () {
                         return;
                     }
                     displayController.handleClick(row, col);
-                    displayController.renderBoard(gameBoard.getBoard());
                 });
 
                 cell.textContent = board[i][j] ?? '[ ]';
@@ -163,7 +166,10 @@ const displayController = (function () {
     }
 
     function handleClick(row, col) {
-        gameController.playTurn(row, col);
+        const success = gameController.playTurn(row, col);
+        if (success === true) {
+            displayController.renderBoard(gameBoard.getBoard());
+        }
     }
 
     return { renderBoard, handleClick };
